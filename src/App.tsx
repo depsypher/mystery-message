@@ -158,7 +158,7 @@ function App() {
                 </Box>
                 <Solution message={message} answers={answers} />
                 <MessageKey message={message} answers={answers} setAnswer={setAnswer} />
-                <Link color="inherit" href={`/solve?m=${R8.encode(message)}`}>Solve</Link>
+                <Link color="inherit" href={`/mystery-message/solve?m=${R8.encode(message)}`}>Solve</Link>
             </Box>
             <Footer />
         </div>

@@ -13,7 +13,7 @@ function Footer() {
                 <Link color="inherit" href="/">Mystery Message Maker</Link>
             </Typography>
             <Typography variant="body2" color="text.secondary" align="center">
-                <img src="/Flag_of_British_Columbia.svg" width="60" style={{marginTop: ".4rem"}} />
+                <img src="/mystery-message/Flag_of_British_Columbia.svg" width="60" style={{marginTop: ".4rem"}} />
             </Typography>
             <Typography variant="body2" color="text.secondary" align="center" style={{marginBottom: "0rem"}}>
                 Made in beautiful British Columbia

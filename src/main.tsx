@@ -17,7 +17,7 @@ const router = createBrowserRouter([
         path: "/solve",
         element: <Solve />
     },
-]);
+], {basename: "/mystery-message"});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
