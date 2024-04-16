@@ -12,6 +12,7 @@ import Solution from "./Solution.tsx";
 import MessageKey from "./MessageKey.tsx";
 import Footer from "./Footer.tsx";
 import Link from "@mui/material/Link";
+import { Link as RouterLink  } from "react-router-dom";
 import {R8} from "./Rot8000.tsx";
 
 interface Char {
@@ -158,7 +159,7 @@ function App() {
                 </Box>
                 <Solution message={message} answers={answers} />
                 <MessageKey message={message} answers={answers} setAnswer={setAnswer} />
-                <Link color="inherit" href={`/solve?m=${R8.encode(message)}`}>Solve</Link>
+                <Link color="inherit" component={RouterLink} to={`/solve?m=${R8.encode(message)}`}>Solve</Link>
             </Box>
             <Footer />
         </div>
