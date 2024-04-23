@@ -22,12 +22,14 @@ interface Char {
     a: string | number;
 }
 export interface MessageSolution {
+    title: string;
     message: string;
     words: Char[][];
 }
 
 function App() {
     const [message, setMessage] = useState<MessageSolution>({
+        title: "Can you decode this mystery message?",
         message: "",
         words: []
     })
@@ -61,11 +63,11 @@ function App() {
         } else {
             setAnswerRange(newValue as number[]);
         }
-        setMessageSolution(message.message)
+        setMessageSolution(message.title, message.message)
     };
 
-    const setMessageSolution = (value: string) => {
-        const all = [...value.toLowerCase()]
+    const setMessageSolution = (title: string, solution: string) => {
+        const all = [...solution.toLowerCase()]
 
         const mappings = all
             .map(v => v.toLowerCase())
@@ -81,7 +83,13 @@ function App() {
         }
 
         setMessage(prevState => {
-            console.log(prevState.message)
+            if (prevState.message === solution) {
+                return {
+                    title: title,
+                    message: solution,
+                    words: message.words
+                }
+            }
             const keys = new Map<string, number>();
             const chars = mappings.map(c => {
                 const isWhitespace = c.trim() === "";
@@ -122,7 +130,8 @@ function App() {
                 }
             }
             return {
-                message: value,
+                title: title,
+                message: solution,
                 words: words
             }
         });
@@ -131,16 +140,26 @@ function App() {
     return (
         <>
         <div className="configBox">
-            <Box sx={{ my: 10 }}>
+            <Box sx={{ my: 5 }}>
                 <Typography variant="h4" component="h1" sx={{ mb: 2, mt: 1, fontSize: { xs: "1.5rem", sm: "1.8rem", md: "2rem"} }}>
                     Mystery Message Maker
                 </Typography>
+                <TextField
+                    id="title"
+                    label="Title"
+                    variant="outlined"
+                    value={message.title}
+                    onChange={(e) => setMessageSolution(e.target.value, message.message)}
+                    sx={{ mb: 2 }}
+                    autoComplete='off'
+                    fullWidth
+                />
                 <TextField
                     id="message"
                     label="Message"
                     variant="outlined"
                     value={message.message}
-                    onChange={(e) => setMessageSolution(e.target.value)}
+                    onChange={(e) => setMessageSolution(message.title, e.target.value)}
                     sx={{ mb: 2 }}
                     autoComplete='off'
                     fullWidth

@@ -32,7 +32,7 @@ function Solve() {
         <Container maxWidth="lg">
             <Box sx={{ my: 10 }}>
                 <Typography variant="h4" component="h1" sx={{ mb: 2, mt: 1 }}>
-                    Mystery Message Maker
+                    {message.title}
                 </Typography>
                 <Solution message={message} answers={answers} />
                 <MessageKey message={message} answers={answers} setAnswer={setAnswer} />

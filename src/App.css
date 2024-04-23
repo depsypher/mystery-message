@@ -1,17 +1,17 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
 .configBox {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  width: clamp(320px, 70vw, 1280px);
-  height: 92vh;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: clamp(320px, 70vw, 1280px);
+    height: 92vh;
 }
 
 .card {
-  padding: 2em;
+    padding: 2em;
 }
