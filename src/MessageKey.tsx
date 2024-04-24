@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import {MessageSolution} from "./App.tsx";
 import Typography from "@mui/material/Typography";
 import {TextField} from "@mui/material";
+import {Rng} from "./Rng.ts";
 
 interface Props {
     message: MessageSolution;
@@ -21,16 +22,17 @@ export default function MessageKey(props: Props) {
     function updateQuestion(char: string) {
         props.resetQuestion && props.resetQuestion(char);
     }
-
+    const rng = Rng(message.message, ..."some arbitrary extra seed");
     const mappings = chars
-        .sort(() => rng(message.message)() - 0.5)
+        .sort(() => {
+            return rng.random() - 0.5;
+        })
         .map((char, i) =>
             <span key={`map-${i}`}
                   style={{marginRight: "1.5rem", marginBottom: "1rem", border: "solid 1px black", padding: "1rem", minWidth: "7rem"}}
-                  onClick={() => updateQuestion(char.c)}
             >
                 <div style={{display: "flex", alignItems: "center", whiteSpace: "nowrap"}}>
-                    <span>
+                    <span onClick={() => updateQuestion(char.c)}>
                         <strong>{char.c.toUpperCase()}</strong>: {char.q} =
                     </span>
                     <TextField
@@ -60,27 +62,4 @@ export default function MessageKey(props: Props) {
             </Box>
         </>
     )
-}
-
-function rng(seed = '') {
-    let x = 0
-    let y = 0
-    let z = 0
-    let w = 0
-
-    function next() {
-        const t = x ^ (x << 11)
-        x = y
-        y = z
-        z = w
-        w ^= ((w >>> 19) ^ t ^ (t >>> 8)) >>> 0
-        return Math.abs(w / 0x100000000)
-    }
-
-    for (let k = 0; k < seed.length + 64; k++) {
-        x ^= seed.charCodeAt(k) | 0
-        next()
-    }
-
-    return next
 }
