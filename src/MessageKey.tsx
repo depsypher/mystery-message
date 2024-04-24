@@ -7,6 +7,7 @@ interface Props {
     message: MessageSolution;
     answers: Map<string, string>;
     setAnswer: (char: string, value: string) => void;
+    resetQuestion?: (c: string) => void;
 }
 
 export default function MessageKey(props: Props) {
@@ -17,10 +18,17 @@ export default function MessageKey(props: Props) {
     const ids = flat.map(v => v.c)
     const chars = flat.filter((v, i) => !ids.includes(v.c, i + 1));
 
+    function updateQuestion(char: string) {
+        props.resetQuestion && props.resetQuestion(char);
+    }
+
     const mappings = chars
         .sort(() => rng(message.message)() - 0.5)
         .map((char, i) =>
-            <span key={`map-${i}`} style={{marginRight: "1.5rem", marginBottom: "1rem", border: "solid 1px black", padding: "1rem", minWidth: "7rem"}}>
+            <span key={`map-${i}`}
+                  style={{marginRight: "1.5rem", marginBottom: "1rem", border: "solid 1px black", padding: "1rem", minWidth: "7rem"}}
+                  onClick={() => updateQuestion(char.c)}
+            >
                 <div style={{display: "flex", alignItems: "center", whiteSpace: "nowrap"}}>
                     <span>
                         <strong>{char.c.toUpperCase()}</strong>: {char.q} =

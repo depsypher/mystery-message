@@ -45,6 +45,24 @@ function App() {
         });
     }
 
+    const resetQuestion = (char: string) => {
+        setMessage(prevState => {
+            return {
+                title: prevState.title,
+                message: prevState.message,
+                words: prevState.words.map(w => {
+                    return w.map(c => {
+                        if (c.c === char && typeof c.a === "number") {
+                            const term = Math.floor(Math.random() * c.a);
+                            c.q = `${term} + ${c.a - term}`
+                        }
+                        return c;
+                    })
+                }),
+            };
+        })
+    }
+
     const handleAnswerRange = (_: Event, newValue: number | number[], activeThumb: number) => {
         if (!Array.isArray(newValue)) {
             return;
@@ -98,7 +116,8 @@ function App() {
                     const values = [...keys.values()];
 
                     let answer = 0
-                    while (values.length != -1) {
+                    // eslint-disable-next-line no-constant-condition
+                    while (true) {
                         answer = Math.floor(Math.random() * distance) + answerRange[0];
                         if (!values.includes(answer)) {
                             keys.set(c, answer);
@@ -108,6 +127,7 @@ function App() {
                     const term = Math.floor(Math.random() * answer)
                     question = `${term} + ${answer - term}`
                 }
+
                 const answer = keys.get(c) as number;
                 return {
                     c: c,
@@ -177,7 +197,7 @@ function App() {
                     />
                 </Box>
                 <Solution message={message} answers={answers} />
-                <MessageKey message={message} answers={answers} setAnswer={setAnswer} />
+                <MessageKey message={message} answers={answers} setAnswer={setAnswer} resetQuestion={resetQuestion} />
                 <Link color="inherit" component={RouterLink} to={`/solve?m=${R8.encode(message)}`}>Solve</Link>
             </Box>
             <Footer />

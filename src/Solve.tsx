@@ -20,7 +20,6 @@ function Solve() {
 
     const [answers, setAnswers] = useState(new Map<string, string>());
     const setAnswer = (char: string, value: string) => {
-        answers.set(char, value);
         setAnswers(prevState => {
             prevState.set(char, value);
             return new Map(prevState);
