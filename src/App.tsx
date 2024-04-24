@@ -63,12 +63,22 @@ function App() {
         })
     }
 
+    function getMappings(solution: string) {
+        const all = [...solution.toLowerCase()];
+        const mappings = all
+            .map(v => v.toLowerCase())
+            .filter((v, i) => {
+                return i === all.lastIndexOf(v)
+            });
+        return {all, mappings};
+    }
+
     const handleAnswerRange = (_: Event, newValue: number | number[], activeThumb: number) => {
         if (!Array.isArray(newValue)) {
             return;
         }
-        const chars = [...new Set(message.words.flat())];
-        const minDistance = chars.length - 1;
+        const {mappings} = getMappings(message.message);
+        const minDistance = mappings.length;
 
         if (newValue[1] - newValue[0] < minDistance) {
             if (activeThumb === 0) {
@@ -85,11 +95,7 @@ function App() {
     };
 
     const setMessageSolution = (title: string, solution: string) => {
-        const all = [...solution.toLowerCase()]
-
-        const mappings = all
-            .map(v => v.toLowerCase())
-            .filter((v, i) => { return i === all.lastIndexOf(v) })
+        const {all, mappings} = getMappings(solution);
 
         const minDistance = mappings.length;
 
