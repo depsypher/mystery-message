@@ -45,19 +45,22 @@ export default function Solution(props: Props) {
                 }
             </span>;
         });
-        return <span key={`word-${wi}`} style={{display: "flex", marginRight: "1rem", marginBottom: "1rem"}}>
+        return <span key={`word-${wi}`} style={{display: "flex", marginRight: "1rem", marginBottom: "0.5rem"}}>
            {w}
         </span>
     });
 
+    if (message.message.length === 0) {
+        return null;
+    }
     return (
         <>
             <Typography id="solution" gutterBottom>
                 <strong>Solution:</strong>
             </Typography>
 
-            <Box style={{ display: "flex", width: "fit-content", flexWrap: "wrap"}}>
-                {spots}
+            <Box style={{ display: "flex", width: "fit-content", flexWrap: "wrap", marginBottom: "1rem"}}>
+                { spots }
             </Box>
         </>
     )

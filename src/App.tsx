@@ -198,7 +198,9 @@ function App() {
                 </Box>
                 <Solution message={message} answers={answers} />
                 <MessageKey message={message} answers={answers} setAnswer={setAnswer} resetQuestion={resetQuestion} />
-                <Link color="inherit" component={RouterLink} to={`/solve?m=${R8.encode(message)}`}>Solve</Link>
+                {  message.message.length > 0 &&
+                    <Link color="inherit" component={RouterLink} to={`/solve?m=${R8.encode(message)}`}>Solve</Link>
+                }
             </Box>
             <Footer />
         </div>

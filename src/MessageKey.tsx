@@ -44,6 +44,11 @@ export default function MessageKey(props: Props) {
                 </div>
             </span>
         );
+
+    if (message.message.length === 0) {
+        return null;
+    }
+
     return (
         <>
             <Typography id="message-key" gutterBottom>
