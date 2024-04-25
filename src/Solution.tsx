@@ -25,7 +25,7 @@ export default function Solution(props: Props) {
 
         const w = word.map((char, ci) => {
             const val = char && !char.w && inverted.get(`${char.a}`) ? inverted.get(`${char.a}`) : "";
-            return <span key={`ch-${ci}`} style={{marginRight: "1.5rem", textAlign: "center"}}>
+            return <span key={`ch-${ci}`} style={{marginRight: "1rem", textAlign: "center"}}>
                 { char && !char.w ?
                     <>
                         <TextField
@@ -55,11 +55,11 @@ export default function Solution(props: Props) {
     }
     return (
         <>
-            <Typography id="solution" gutterBottom>
-                <strong>Solution:</strong>
+            <Typography id="solution" gutterBottom variant={"overline"}>
+                Solution:
             </Typography>
 
-            <Box style={{ display: "flex", width: "fit-content", flexWrap: "wrap", marginBottom: "1rem"}}>
+            <Box style={{ display: "flex", width: "fit-content", flexWrap: "wrap"}}>
                 { spots }
             </Box>
         </>

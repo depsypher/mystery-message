@@ -1,0 +1,21 @@
+.fieldsetBox {
+    border-color: rgba(0, 0, 0, 0.23);
+    border-width: 1px;
+    border-radius: 4px;
+    margin: 0;
+    padding: 0 8px;
+}
+
+.fieldsetBox > legend {
+    font-size: 0.75em;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.fieldsetBox > legend > span {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.fieldsetBoxContents {
+    padding: 0.5em 0.4em;
+}

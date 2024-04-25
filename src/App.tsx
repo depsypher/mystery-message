@@ -3,17 +3,24 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import {useState} from "react";
+import {ChangeEvent, useState} from "react";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import {TextField} from "@mui/material";
+import {
+    Button,
+    Checkbox, FormControl,
+    FormControlLabel,
+    FormGroup, FormLabel,
+    Grid,
+    TextField
+} from "@mui/material";
 import Solution from "./Solution.tsx";
 import MessageKey from "./MessageKey.tsx";
 import Footer from "./Footer.tsx";
-import Link from "@mui/material/Link";
 import { Link as RouterLink  } from "react-router-dom";
 import {R8} from "./Rot8000.tsx";
+import FieldsetBox from "./FieldsetBox.tsx";
 
 interface Char {
     c: string;
@@ -27,6 +34,8 @@ export interface MessageSolution {
     words: Char[][];
 }
 
+type Operation = "addition" | "subtraction";
+
 function App() {
     const [message, setMessage] = useState<MessageSolution>({
         title: "Can you decode this mystery message?",
@@ -36,6 +45,10 @@ function App() {
 
     const [answerRange, setAnswerRange] = useState<number[]>([0, 9]);
     const [answers, setAnswers] = useState(new Map<string, string>());
+    const initialOperation = new Map<Operation, boolean>();
+    initialOperation.set("addition", true);
+    initialOperation.set("subtraction", false);
+    const [operations, setOperations] = useState(initialOperation);
 
     const setAnswer = (char: string, value: string) => {
         answers.set(char, value);
@@ -43,6 +56,22 @@ function App() {
             prevState.set(char, value);
             return new Map(prevState);
         });
+    }
+
+    function generateQuestion(answer: number) {
+        const enabledOps = [...operations.entries()].filter(v => v[1]);
+        const randomOp = enabledOps[Math.floor(Math.random() * enabledOps.length)][0];
+
+        switch (randomOp) {
+            case "addition": {
+                const term = Math.floor(Math.random() * answer);
+                return `${term} + ${answer - term}`;
+            }
+            case "subtraction": {
+                const term = Math.floor(Math.random() * answer);
+                return `${answer + term} - ${term}`;
+            }
+        }
     }
 
     const resetQuestion = (char: string) => {
@@ -53,8 +82,7 @@ function App() {
                 words: prevState.words.map(w => {
                     return w.map(c => {
                         if (c.c === char && typeof c.a === "number") {
-                            const term = Math.floor(Math.random() * c.a);
-                            c.q = `${term} + ${c.a - term}`
+                            c.q = generateQuestion(c.a);
                         }
                         return c;
                     })
@@ -91,10 +119,35 @@ function App() {
         } else {
             setAnswerRange(newValue as number[]);
         }
-        setMessageSolution(message.title, message.message)
+        setMessageSolution(message.title, message.message, true)
     };
 
-    const setMessageSolution = (title: string, solution: string) => {
+    const handleAdditionChecked = (_: ChangeEvent, checked: boolean) => {
+        setOperations(prevState => {
+            // if this is the last enabled option, prevent unchecking it
+            if (!checked && ![...prevState.entries()].find(v => v[0] !== "addition" && v[1])) {
+                return prevState;
+            }
+            prevState.set("addition", checked);
+            return new Map(prevState);
+        });
+        setAnswers(new Map())
+        setMessageSolution(message.title, message.message, true);
+    }
+    const handleSubtractionChecked = (_: ChangeEvent, checked: boolean) => {
+        setOperations(prevState => {
+            // if this is the last enabled option, prevent unchecking it
+            if (!checked && ![...prevState.entries()].find(v => v[0] !== "subtraction" && v[1])) {
+                return prevState;
+            }
+            prevState.set("subtraction", checked);
+            return new Map(prevState);
+        });
+        setAnswers(new Map());
+        setMessageSolution(message.title, message.message, true);
+    }
+
+    const setMessageSolution = (title: string, solution: string, force: boolean) => {
         const {all, mappings} = getMappings(solution);
 
         const minDistance = mappings.length;
@@ -107,7 +160,7 @@ function App() {
         }
 
         setMessage(prevState => {
-            if (prevState.message === solution) {
+            if (!force && prevState.message === solution) {
                 return {
                     title: title,
                     message: solution,
@@ -130,8 +183,7 @@ function App() {
                             break;
                         }
                     }
-                    const term = Math.floor(Math.random() * answer)
-                    question = `${term} + ${answer - term}`
+                    question = generateQuestion(answer);
                 }
 
                 const answer = keys.get(c) as number;
@@ -164,10 +216,9 @@ function App() {
     }
 
     return (
-        <>
         <div className="configBox">
             <Box sx={{ my: 5 }}>
-                <Typography variant="h4" component="h1" sx={{ mb: 2, mt: 1, fontSize: { xs: "1.5rem", sm: "1.8rem", md: "2rem"} }}>
+                <Typography variant="h4" component="h1" sx={{ mb: 3, mt: 1, fontSize: { xs: "1.5rem", sm: "1.8rem", md: "2rem"} }}>
                     Mystery Message Maker
                 </Typography>
                 <TextField
@@ -175,8 +226,8 @@ function App() {
                     label="Title"
                     variant="outlined"
                     value={message.title}
-                    onChange={(e) => setMessageSolution(e.target.value, message.message)}
-                    sx={{ mb: 2 }}
+                    onChange={(e) => setMessageSolution(e.target.value, message.message, false)}
+                    sx={{ mb: 3 }}
                     autoComplete='off'
                     fullWidth
                 />
@@ -185,32 +236,62 @@ function App() {
                     label="Message"
                     variant="outlined"
                     value={message.message}
-                    onChange={(e) => setMessageSolution(message.title, e.target.value)}
-                    sx={{ mb: 2 }}
+                    onChange={(e) => setMessageSolution(message.title, e.target.value, false)}
+                    sx={{ mb: 3 }}
                     autoComplete='off'
                     fullWidth
                 />
-                <Box sx={{ alignItems: "flex-start" }}>
-                    <Typography id="answer-range-slider" gutterBottom>
-                        <strong>Answer range:</strong> {answerRange[0]} - {answerRange[1]}
-                    </Typography>
-                    <Slider
-                        getAriaLabel={() => 'Answer range'}
-                        value={answerRange}
-                        onChange={handleAnswerRange}
-                        valueLabelDisplay="off"
-                        getAriaValueText={(value, i) => i == 0 ? `From ${value}` : `To ${value}`}
-                    />
-                </Box>
-                <Solution message={message} answers={answers} />
-                <MessageKey message={message} answers={answers} setAnswer={setAnswer} resetQuestion={resetQuestion} />
-                {  message.message.length > 0 &&
-                    <Link color="inherit" component={RouterLink} to={`/solve?m=${R8.encode(message)}`}>Solve</Link>
+                { message.message.length > 0 &&
+                    <>
+                        <FieldsetBox title="Problem" style={{marginBottom: "1.5rem"}}>
+                            <Solution message={message} answers={answers} />
+                            <MessageKey message={message} answers={answers} setAnswer={setAnswer} resetQuestion={resetQuestion} />
+                        </FieldsetBox>
+                        <FieldsetBox title="Parameters" style={{marginBottom: "1.5rem"}}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} md={6}>
+                                    <FormControl component="fieldset" variant="standard">
+                                        <FormLabel component="legend">Operations</FormLabel>
+                                            <FormGroup>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox checked={operations.get("addition")} onChange={handleAdditionChecked} />
+                                                    }
+                                                    label="Addition"
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox checked={operations.get("subtraction")} onChange={handleSubtractionChecked} />
+                                                    }
+                                                    label="Subtraction"
+                                                />
+                                            </FormGroup>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <Box sx={{ marginLeft: "0.5rem" }}>
+                                        <Typography id="answer-range-slider" gutterBottom style={{marginLeft: "-0.5rem"}}>
+                                            <FormLabel>Answer range: {answerRange[0]} - {answerRange[1]}</FormLabel>
+                                        </Typography>
+                                        <Slider
+                                            getAriaLabel={() => 'Answer range'}
+                                            value={answerRange}
+                                            onChange={handleAnswerRange}
+                                            valueLabelDisplay="off"
+                                            getAriaValueText={(value, i) => i == 0 ? `From ${value}` : `To ${value}`}
+                                        />
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </FieldsetBox>
+                        <Button variant="contained" component={RouterLink} to={`/solve?m=${R8.encode(message)}`}>
+                            Solve
+                        </Button>
+                    </>
                 }
             </Box>
             <Footer />
         </div>
-        </>
     );
 }
 
