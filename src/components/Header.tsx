@@ -3,6 +3,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import PrintIcon from '@mui/icons-material/Print';
 import {Link as RouterLink} from "react-router-dom";
 import Link from "@mui/material/Link";
+import Tooltip from '@mui/material/Tooltip';
 
 function Header() {
 
@@ -10,13 +11,19 @@ function Header() {
         <div id="header" style={{position: "fixed", right: "3em", color: "rgba(0,0,0,0.25)"}}>
             <div style={{display: "flex", gap: "1em"}}>
                 <Link component={RouterLink} color="inherit" to="/">
-                    <AddBoxIcon />
+                    <Tooltip title="Make" arrow>
+                        <AddBoxIcon />
+                    </Tooltip>
                 </Link>
                 <Link color="inherit" href="#" onClick={() => window.print()}>
-                    <PrintIcon />
+                    <Tooltip title="Print" arrow>
+                        <PrintIcon />
+                    </Tooltip>
                 </Link>
                 <Link color="inherit" href="https://github.com/depsypher/mystery-message">
-                    <InfoIcon />
+                    <Tooltip title="About" arrow>
+                        <InfoIcon />
+                    </Tooltip>
                 </Link>
             </div>
         </div>

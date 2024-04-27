@@ -31,8 +31,8 @@ function Solve() {
         <>
             <Header />
             <Container maxWidth="lg">
-                <Box sx={{my: 10}}>
-                    <Typography variant="h4" component="h1" sx={{mb: 2, mt: 1}}>
+                <Box id="solve">
+                    <Typography variant="h4" component="h1" sx={{mb: 2}}>
                         {message.title}
                     </Typography>
                     <Solution message={message} answers={answers}/>
