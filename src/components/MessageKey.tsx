@@ -1,8 +1,8 @@
 import Box from "@mui/material/Box";
-import {MessageSolution} from "./App.tsx";
+import {MessageSolution} from "../App.tsx";
 import Typography from "@mui/material/Typography";
 import {TextField} from "@mui/material";
-import {Rng} from "./Rng.ts";
+import {Rng} from "../util/Rng.ts";
 
 interface Props {
     message: MessageSolution;

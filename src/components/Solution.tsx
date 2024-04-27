@@ -1,6 +1,6 @@
 import {TextField} from "@mui/material";
 import Box from "@mui/material/Box";
-import {MessageSolution} from "./App.tsx";
+import {MessageSolution} from "../App.tsx";
 import Typography from "@mui/material/Typography";
 
 // function LightBulbIcon(props: SvgIconProps) {

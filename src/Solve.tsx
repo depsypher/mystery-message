@@ -6,13 +6,13 @@ import '@fontsource/roboto/700.css';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Solution from "./Solution.tsx";
-import MessageKey from "./MessageKey.tsx";
-import Footer from "./Footer.tsx";
+import Solution from "./components/Solution.tsx";
+import MessageKey from "./components/MessageKey.tsx";
+import Footer from "./components/Footer.tsx";
 import {useSearchParams} from "react-router-dom";
 import {useState} from "react";
-import {R8} from "./Rot8000.tsx";
-import Header from "./Header.tsx";
+import {R8} from "./util/Rot8000.tsx";
+import Header from "./components/Header.tsx";
 
 function Solve() {
     const [searchParams] = useSearchParams();

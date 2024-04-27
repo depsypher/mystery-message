@@ -15,12 +15,12 @@ import {
     Grid,
     TextField
 } from "@mui/material";
-import Solution from "./Solution.tsx";
-import MessageKey from "./MessageKey.tsx";
-import Footer from "./Footer.tsx";
+import Solution from "./components/Solution.tsx";
+import MessageKey from "./components/MessageKey.tsx";
+import Footer from "./components/Footer.tsx";
 import { Link as RouterLink  } from "react-router-dom";
-import {R8} from "./Rot8000.tsx";
-import FieldsetBox from "./FieldsetBox.tsx";
+import {R8} from "./util/Rot8000.tsx";
+import FieldsetBox from "./components/FieldsetBox.tsx";
 
 interface Char {
     c: string;

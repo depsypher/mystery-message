@@ -1,4 +1,4 @@
-import {MessageSolution} from "./App.tsx";
+import {MessageSolution} from "../App.tsx";
 
 export class Rot8000 {
 
