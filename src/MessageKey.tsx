@@ -29,7 +29,7 @@ export default function MessageKey(props: Props) {
         })
         .map((char, i) =>
             <span key={`map-${i}`} style={{
-                marginRight: "1.5rem", marginBottom: "1rem", border: "solid 1px black", padding: "1rem", minWidth: "7rem",
+                marginRight: "1.5rem", marginBottom: "1rem", border: "solid 1px black", padding: "0.8rem", minWidth: "7rem",
                 borderColor: "rgba(0, 0, 0, 0.23)"
             }}>
                 <div style={{display: "flex", alignItems: "center", whiteSpace: "nowrap"}}>

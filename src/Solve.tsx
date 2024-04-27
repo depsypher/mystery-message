@@ -12,6 +12,7 @@ import Footer from "./Footer.tsx";
 import {useSearchParams} from "react-router-dom";
 import {useState} from "react";
 import {R8} from "./Rot8000.tsx";
+import Header from "./Header.tsx";
 
 function Solve() {
     const [searchParams] = useSearchParams();
@@ -28,17 +29,19 @@ function Solve() {
 
     return (
         <>
-        <Container maxWidth="lg">
-            <Box sx={{ my: 10 }}>
-                <Typography variant="h4" component="h1" sx={{ mb: 2, mt: 1 }}>
-                    {message.title}
-                </Typography>
-                <Solution message={message} answers={answers} />
-                <MessageKey message={message} answers={answers} setAnswer={setAnswer} />
-            </Box>
-        </Container>
-        <Footer />
+            <Header />
+            <Container maxWidth="lg">
+                <Box sx={{my: 10}}>
+                    <Typography variant="h4" component="h1" sx={{mb: 2, mt: 1}}>
+                        {message.title}
+                    </Typography>
+                    <Solution message={message} answers={answers}/>
+                    <MessageKey message={message} answers={answers} setAnswer={setAnswer}/>
+                </Box>
+            </Container>
+            <Footer/>
         </>
     );
 }
+
 export default Solve
