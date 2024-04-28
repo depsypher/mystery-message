@@ -1,3 +1,4 @@
+import "./Footer.css";
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import { Link as RouterLink  } from "react-router-dom";
@@ -17,12 +18,12 @@ function Footer(props: Props) {
     const FooterLink = (props: FooterLinkProps) => {
         if (linkToAbout) {
             return <Link color="inherit" href="https://github.com/depsypher/mystery-message"
-                         style={{marginTop: "auto", marginLeft: "auto", marginRight: "auto", textDecoration: "none"}}
-                         target="_blank">{props.children}</Link>
+                         className="aboutLink" target="_blank">{props.children}
+            </Link>;
         }
         return <Link component={RouterLink} color="inherit" to="/"
-                     style={{marginTop: "auto", marginLeft: "auto", marginRight: "auto", textDecoration: "none"}}
-                     target="_blank">{props.children}</Link>;
+                     className="aboutLink"  target="_blank">{props.children}
+        </Link>;
     }
 
     return (

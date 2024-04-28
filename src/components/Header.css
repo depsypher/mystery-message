@@ -1,0 +1,10 @@
+#header {
+    position: fixed;
+    right: 3em;
+    color: rgba(0,0,0,0.25);
+}
+
+.headerIcons {
+    display: flex;
+    gap: 1em;
+}

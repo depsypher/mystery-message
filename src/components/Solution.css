@@ -1,0 +1,16 @@
+.char {
+    margin-right: 1rem;
+    text-align: center;
+}
+
+.word {
+    display: flex;
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.solutionBox {
+    display: flex;
+    width: fit-content;
+    flex-wrap: wrap;
+}

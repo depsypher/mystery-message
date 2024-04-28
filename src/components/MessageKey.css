@@ -1,0 +1,39 @@
+.mappingBox {
+    margin-right: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+    min-width: 9rem;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+}
+
+.mappingBoxInner {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.mappingBoxInner span {
+    display: flex;
+}
+
+.mappingBoxInner strong {
+    font-size: 1.4rem;
+}
+
+.colon {
+    line-height: 1.9rem;
+    margin-right: 0.5rem;
+    margin-left: 0.1rem;
+}
+
+.question {
+    align-self: center;
+    font-size: 1.1rem;
+    margin-top: 0.1rem;
+}
+
+.mappingBoxOuter {
+    display: flex;
+    width: fit-content;
+    flex-wrap: wrap;
+}

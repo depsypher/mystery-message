@@ -1,3 +1,4 @@
+import "./Header.css";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import InfoIcon from '@mui/icons-material/Info';
 import PrintIcon from '@mui/icons-material/Print';
@@ -13,14 +14,15 @@ function Header() {
     const [copyToastOpen, setCopyToastOpen] = useState(false);
 
     return (
-        <div id="header" style={{position: "fixed", right: "3em", color: "rgba(0,0,0,0.25)"}}>
-            <div style={{display: "flex", gap: "1em"}}>
+        <div id="header">
+            <div className="headerIcons">
                 <Link component={RouterLink} color="inherit" to="/" target="_blank">
                     <Tooltip title="Make one" arrow>
                         <AddBoxIcon />
                     </Tooltip>
                 </Link>
-                <Link color="inherit" href="#" onClick={() => {navigator.clipboard.writeText(document.location.href).then(() => setCopyToastOpen(true))}}>
+                <Link color="inherit" href="#"
+                      onClick={() => {navigator.clipboard.writeText(document.location.href).then(() => setCopyToastOpen(true))}}>
                     <Tooltip title="Copy Link" arrow>
                         <ContentCopyIcon />
                     </Tooltip>

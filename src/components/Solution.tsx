@@ -1,3 +1,4 @@
+import "./Solution.css";
 import {TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import {MessageSolution} from "../App.tsx";
@@ -17,7 +18,7 @@ export default function Solution(props: Props) {
 
         const w = word.map((char, ci) => {
             const val = char && !char.w && inverted.get(`${char.a}`) ? inverted.get(`${char.a}`) : "";
-            return <span key={`ch-${ci}`} style={{marginRight: "1rem", textAlign: "center"}}>
+            return <span key={`ch-${ci}`} className="char">
                 { char && !char.w ?
                     <>
                         <TextField
@@ -37,7 +38,7 @@ export default function Solution(props: Props) {
                 }
             </span>;
         });
-        return <span key={`word-${wi}`} style={{display: "flex", marginRight: "1rem", marginBottom: "0.5rem"}}>
+        return <span key={`word-${wi}`} className="word">
            {w}
         </span>
     });
@@ -51,7 +52,7 @@ export default function Solution(props: Props) {
                 Solution:
             </Typography>
 
-            <Box style={{ display: "flex", width: "fit-content", flexWrap: "wrap"}}>
+            <Box className="solutionBox">
                 { spots }
             </Box>
         </>

@@ -1,3 +1,4 @@
+import "./MessageKey.css"
 import Box from "@mui/material/Box";
 import {MessageSolution} from "../App.tsx";
 import Typography from "@mui/material/Typography";
@@ -28,15 +29,12 @@ export default function MessageKey(props: Props) {
             return rng.random() - 0.5;
         })
         .map((char, i) =>
-            <span key={`map-${i}`} style={{
-                marginRight: "1.5rem", marginBottom: "1rem", border: "solid 1px black", padding: "0.8rem", minWidth: "7rem",
-                borderColor: "rgba(0, 0, 0, 0.23)"
-            }}>
-                <div style={{display: "flex", alignItems: "center", whiteSpace: "nowrap"}}>
-                    <span onClick={() => updateQuestion(char.c)} style={{display: "flex"}}>
-                        <strong style={{fontSize: "1.4rem"}}>{char.c.toUpperCase()}</strong>
-                        <strong style={{fontSize: "1.4rem", lineHeight: "1.9rem", marginRight: "0.5rem", marginLeft: "0.1rem"}}>:</strong>
-                        <span style={{display: "flex", alignSelf: "center", fontSize: "1.1rem", marginTop: "0.1rem"}}>{char.q} =</span>
+            <span key={`map-${i}`} className="mappingBox">
+                <div className="mappingBoxInner">
+                    <span onClick={() => updateQuestion(char.c)}>
+                        <strong>{char.c.toUpperCase()}</strong>
+                        <strong className="colon">:</strong>
+                        <span className="question">{char.q} =</span>
                     </span>
                     <TextField
                         id={`mkc-${i}`}
@@ -60,7 +58,7 @@ export default function MessageKey(props: Props) {
                 Message Key:
             </Typography>
 
-            <Box style={{ display: "flex", width: "fit-content", flexWrap: "wrap"}}>
+            <Box className="mappingBoxOuter">
                 {mappings}
             </Box>
         </>
