@@ -40,6 +40,7 @@ export default function MessageKey(props: Props) {
                             id={`mkc-${i}`}
                             style={{width: "3.1rem", marginLeft: "0.5rem"}}
                             autoComplete="off"
+                            type="number"
                             inputProps={{maxLength: 3, style: {textAlign: 'center', fontSize: 20, padding: "0.5rem"}}}
                             value={answers.get(char.c) || ""}
                             onChange={(e) => setAnswer(char.c, e.target.value)}
