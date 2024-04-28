@@ -1,6 +1,6 @@
 .aboutLink {
-    margin-top: auto;
-    margin-left: auto;
-    margin-right: auto;
-    text-decoration: none;
+    margin-top: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-decoration: none !important;
 }
