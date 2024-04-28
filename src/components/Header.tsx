@@ -9,29 +9,37 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import {Snackbar} from "@mui/material";
 import {useState} from "react";
 
-function Header() {
+interface Props {
+    solve: boolean;
+}
 
+function Header(props: Props) {
+    const {solve} = props;
     const [copyToastOpen, setCopyToastOpen] = useState(false);
 
     return (
         <div id="header">
             <div className="headerIcons">
-                <Link component={RouterLink} color="inherit" to="/" target="_blank">
-                    <Tooltip title="Make one" arrow>
-                        <AddBoxIcon />
-                    </Tooltip>
-                </Link>
-                <Link color="inherit" href="#"
-                      onClick={() => {navigator.clipboard.writeText(document.location.href).then(() => setCopyToastOpen(true))}}>
-                    <Tooltip title="Copy Link" arrow>
-                        <ContentCopyIcon />
-                    </Tooltip>
-                </Link>
-                <Link color="inherit" href="#" onClick={() => window.print()}>
-                    <Tooltip title="Print" arrow>
-                        <PrintIcon />
-                    </Tooltip>
-                </Link>
+                { solve &&
+                    <>
+                    <Link component={RouterLink} color="inherit" to="/" target="_blank">
+                        <Tooltip title="Make one" arrow>
+                            <AddBoxIcon />
+                        </Tooltip>
+                    </Link>
+                    <Link color="inherit" href="#"
+                          onClick={() => {navigator.clipboard.writeText(document.location.href).then(() => setCopyToastOpen(true))}}>
+                        <Tooltip title="Copy Link" arrow>
+                            <ContentCopyIcon />
+                        </Tooltip>
+                    </Link>
+                    <Link color="inherit" href="#" onClick={() => window.print()}>
+                        <Tooltip title="Print" arrow>
+                            <PrintIcon />
+                        </Tooltip>
+                    </Link>
+                    </>
+                }
                 <Link color="inherit" href="https://github.com/depsypher/mystery-message">
                     <Tooltip title="About" arrow>
                         <InfoIcon />

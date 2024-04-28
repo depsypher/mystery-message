@@ -44,7 +44,7 @@ function Solve() {
     return (
         <>
             <Fireworks onInit={initFireworks} />
-            <Header />
+            <Header solve={true} />
             <Container maxWidth="lg">
                 <Box id="solve">
                     <Typography variant="h4" component="h1" sx={{mb: 2}}>

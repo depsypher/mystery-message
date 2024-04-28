@@ -17,6 +17,7 @@ import Footer from "./components/Footer.tsx";
 import { Link as RouterLink  } from "react-router-dom";
 import {R8} from "./util/Rot8000.tsx";
 import FieldsetBox from "./components/FieldsetBox.tsx";
+import Header from "./components/Header.tsx";
 
 interface Char {
     c: string;
@@ -213,6 +214,7 @@ function App() {
 
     return (
         <div className="configBox">
+            <Header solve={false} />
             <Box sx={{ my: 5 }}>
                 <Typography variant="h4" component="h1" sx={{ mb: 3, mt: 1, fontSize: { xs: "1.5rem", sm: "1.8rem", md: "2rem"} }}>
                     Mystery Message Maker
