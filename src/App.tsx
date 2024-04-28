@@ -290,7 +290,7 @@ function App() {
                     </>
                 }
             </Box>
-            <Footer />
+            <Footer linkToAbout={true} />
         </div>
     );
 }

@@ -39,7 +39,7 @@ function Solve() {
                     <MessageKey message={message} answers={answers} setAnswer={setAnswer}/>
                 </Box>
             </Container>
-            <Footer/>
+            <Footer linkToAbout={false} />
         </>
     );
 }
