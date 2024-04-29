@@ -31,7 +31,7 @@ export interface MessageSolution {
     words: Char[][];
 }
 
-type Operation = "addition" | "subtraction";
+type Operation = "addition" | "subtraction" | "multiplication";
 
 function App() {
     const [message, setMessage] = useState<MessageSolution>({
@@ -67,6 +67,20 @@ function App() {
             case "subtraction": {
                 const term = Math.floor(Math.random() * answer);
                 return `${answer + term} - ${term}`;
+            }
+            case "multiplication": {
+                if (answer === 0) {
+                    const term = Math.floor(Math.random() * answer);
+                    return `${term} × 0`;
+                }
+                let term = Math.floor(Math.random() * (answer / 2));
+                if (term === 0) {
+                    return `1 × ${answer}`;
+                }
+                while (answer % term != 0) {
+                    term -= 1;
+                }
+                return `${term} × ${answer / term}`;
             }
         }
     }
@@ -141,6 +155,19 @@ function App() {
             return new Map(prevState);
         });
         setAnswers(new Map());
+        setMessageSolution(message.title, message.message, true);
+    }
+
+    const handleMultiplicationChecked = (_: ChangeEvent, checked: boolean) => {
+        setOperations(prevState => {
+            // if this is the last enabled option, prevent unchecking it
+            if (!checked && ![...prevState.entries()].find(v => v[0] !== "multiplication" && v[1])) {
+                return prevState;
+            }
+            prevState.set("multiplication", checked);
+            return new Map(prevState);
+        });
+        setAnswers(new Map())
         setMessageSolution(message.title, message.message, true);
     }
 
@@ -251,18 +278,30 @@ function App() {
                                     <FormControl component="fieldset" variant="standard">
                                         <FormLabel component="legend">Operations</FormLabel>
                                             <FormGroup>
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox checked={operations.get("addition")} onChange={handleAdditionChecked} />
-                                                    }
-                                                    label="Addition"
-                                                />
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox checked={operations.get("subtraction")} onChange={handleSubtractionChecked} />
-                                                    }
-                                                    label="Subtraction"
-                                                />
+                                                <Grid container spacing={2}>
+                                                    <Grid item xs={12} md={6}>
+                                                        <FormControlLabel
+                                                            control={
+                                                                <Checkbox checked={operations.get("addition")} onChange={handleAdditionChecked} />
+                                                            }
+                                                            label="Addition"
+                                                        />
+                                                        <FormControlLabel
+                                                            control={
+                                                                <Checkbox checked={operations.get("subtraction")} onChange={handleSubtractionChecked} />
+                                                            }
+                                                            label="Subtraction"
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={6}>
+                                                        <FormControlLabel
+                                                            control={
+                                                                <Checkbox checked={operations.get("multiplication")} onChange={handleMultiplicationChecked} />
+                                                            }
+                                                            label="Multiplication"
+                                                        />
+                                                    </Grid>
+                                                </Grid>
                                             </FormGroup>
                                     </FormControl>
                                 </Grid>
