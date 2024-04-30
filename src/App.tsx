@@ -45,6 +45,8 @@ function App() {
     const initialOperation = new Map<Operation, boolean>();
     initialOperation.set("addition", true);
     initialOperation.set("subtraction", false);
+    initialOperation.set("multiplication", false);
+    initialOperation.set("division", false);
     const [operations, setOperations] = useState(initialOperation);
 
     const setAnswer = (char: string, value: string) => {
@@ -144,55 +146,33 @@ function App() {
         setMessageSolution(message.title, message.message, true)
     };
 
-    const handleAdditionChecked = (_: ChangeEvent, checked: boolean) => {
+    function handleOperationChecked(operation: Operation, checked: boolean) {
         setOperations(prevState => {
             // if this is the last enabled option, prevent unchecking it
-            if (!checked && ![...prevState.entries()].find(v => v[0] !== "addition" && v[1])) {
+            const other = [...prevState.entries()].find(v => v[0] !== operation && v[1]);
+            if (!checked && !other) {
                 return prevState;
             }
-            prevState.set("addition", checked);
+            prevState.set(operation, checked);
             return new Map(prevState);
         });
         setAnswers(new Map())
         setMessageSolution(message.title, message.message, true);
     }
+
+    const handleAdditionChecked = (_: ChangeEvent, checked: boolean) => {
+        handleOperationChecked("addition", checked);
+    }
     const handleSubtractionChecked = (_: ChangeEvent, checked: boolean) => {
-        setOperations(prevState => {
-            // if this is the last enabled option, prevent unchecking it
-            if (!checked && ![...prevState.entries()].find(v => v[0] !== "subtraction" && v[1])) {
-                return prevState;
-            }
-            prevState.set("subtraction", checked);
-            return new Map(prevState);
-        });
-        setAnswers(new Map());
-        setMessageSolution(message.title, message.message, true);
+        handleOperationChecked("subtraction", checked);
     }
 
     const handleMultiplicationChecked = (_: ChangeEvent, checked: boolean) => {
-        setOperations(prevState => {
-            // if this is the last enabled option, prevent unchecking it
-            if (!checked && ![...prevState.entries()].find(v => v[0] !== "multiplication" && v[1])) {
-                return prevState;
-            }
-            prevState.set("multiplication", checked);
-            return new Map(prevState);
-        });
-        setAnswers(new Map())
-        setMessageSolution(message.title, message.message, true);
+        handleOperationChecked("multiplication", checked);
     }
 
     const handleDivisionChecked = (_: ChangeEvent, checked: boolean) => {
-        setOperations(prevState => {
-            // if this is the last enabled option, prevent unchecking it
-            if (!checked && ![...prevState.entries()].find(v => v[0] !== "division" && v[1])) {
-                return prevState;
-            }
-            prevState.set("division", checked);
-            return new Map(prevState);
-        });
-        setAnswers(new Map())
-        setMessageSolution(message.title, message.message, true);
+        handleOperationChecked("division", checked);
     }
 
     const setMessageSolution = (title: string, solution: string, force: boolean) => {
@@ -306,13 +286,15 @@ function App() {
                                                     <Grid item xs={5} sm={4} md={5}>
                                                         <FormControlLabel
                                                             control={
-                                                                <Checkbox checked={operations.get("addition")} onChange={handleAdditionChecked} />
+                                                                <Checkbox checked={operations.get("addition")}
+                                                                          onChange={handleAdditionChecked} />
                                                             }
                                                             label="Addition"
                                                         />
                                                         <FormControlLabel
                                                             control={
-                                                                <Checkbox checked={operations.get("subtraction")} onChange={handleSubtractionChecked} />
+                                                                <Checkbox checked={operations.get("subtraction")}
+                                                                          onChange={handleSubtractionChecked} />
                                                             }
                                                             label="Subtraction"
                                                         />
@@ -320,13 +302,15 @@ function App() {
                                                     <Grid item xs={5} sm={4} md={5}>
                                                         <FormControlLabel
                                                             control={
-                                                                <Checkbox checked={operations.get("multiplication")} onChange={handleMultiplicationChecked} />
+                                                                <Checkbox checked={operations.get("multiplication")}
+                                                                          onChange={handleMultiplicationChecked} />
                                                             }
                                                             label="Multiplication"
                                                         />
                                                         <FormControlLabel
                                                             control={
-                                                                <Checkbox checked={operations.get("division")} onChange={handleDivisionChecked} />
+                                                                <Checkbox checked={operations.get("division")}
+                                                                          onChange={handleDivisionChecked} />
                                                             }
                                                             label="Division"
                                                         />
