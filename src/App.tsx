@@ -31,7 +31,7 @@ export interface MessageSolution {
     words: Char[][];
 }
 
-type Operation = "addition" | "subtraction" | "multiplication";
+type Operation = "addition" | "subtraction" | "multiplication" | "division";
 
 function App() {
     const [message, setMessage] = useState<MessageSolution>({
@@ -70,7 +70,7 @@ function App() {
             }
             case "multiplication": {
                 if (answer === 0) {
-                    const term = Math.floor(Math.random() * answer);
+                    const term = Math.floor(Math.random() * answerRange[1]);
                     return `${term} × 0`;
                 }
                 let term = Math.floor(Math.random() * (answer / 2));
@@ -81,6 +81,17 @@ function App() {
                     term -= 1;
                 }
                 return `${term} × ${answer / term}`;
+            }
+            case "division": {
+                if (answer === 0) {
+                    const term = Math.floor(Math.random() * answerRange[1]);
+                    return `0 ÷ ${term === 0 ? 1 : term}`;
+                }
+                const term = Math.floor(Math.random() * (answer / 2));
+                if (term === 0) {
+                    return `${answer} ÷ 1`;
+                }
+                return `${answer * term} ÷ ${term}`;
             }
         }
     }
@@ -165,6 +176,19 @@ function App() {
                 return prevState;
             }
             prevState.set("multiplication", checked);
+            return new Map(prevState);
+        });
+        setAnswers(new Map())
+        setMessageSolution(message.title, message.message, true);
+    }
+
+    const handleDivisionChecked = (_: ChangeEvent, checked: boolean) => {
+        setOperations(prevState => {
+            // if this is the last enabled option, prevent unchecking it
+            if (!checked && ![...prevState.entries()].find(v => v[0] !== "division" && v[1])) {
+                return prevState;
+            }
+            prevState.set("division", checked);
             return new Map(prevState);
         });
         setAnswers(new Map())
@@ -279,7 +303,7 @@ function App() {
                                         <FormLabel component="legend">Operations</FormLabel>
                                             <FormGroup>
                                                 <Grid container spacing={2}>
-                                                    <Grid item xs={12} md={6}>
+                                                    <Grid item xs={5} sm={4} md={5}>
                                                         <FormControlLabel
                                                             control={
                                                                 <Checkbox checked={operations.get("addition")} onChange={handleAdditionChecked} />
@@ -293,12 +317,18 @@ function App() {
                                                             label="Subtraction"
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={12} md={6}>
+                                                    <Grid item xs={5} sm={4} md={5}>
                                                         <FormControlLabel
                                                             control={
                                                                 <Checkbox checked={operations.get("multiplication")} onChange={handleMultiplicationChecked} />
                                                             }
                                                             label="Multiplication"
+                                                        />
+                                                        <FormControlLabel
+                                                            control={
+                                                                <Checkbox checked={operations.get("division")} onChange={handleDivisionChecked} />
+                                                            }
+                                                            label="Division"
                                                         />
                                                     </Grid>
                                                 </Grid>
