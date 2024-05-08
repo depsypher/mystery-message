@@ -1,0 +1,15 @@
+{
+    "name": "Mystery Message Maker",
+    "short_name": "Mystery Msg",
+    "theme_color": "#2196f3",
+    "background_color": "#2196f3",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "https://depsypher.github.io/mystery-message/apple-touch-icon.png",
+            "sizes": "512x512"
+        }
+    ]
+}
