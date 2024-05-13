@@ -8,6 +8,10 @@
     "start_url": "/",
     "icons": [
         {
+            "src": "https://depsypher.github.io/mystery-message/apple-touch-icon-192.png",
+            "sizes": "192x192"
+        },
+        {
             "src": "https://depsypher.github.io/mystery-message/apple-touch-icon.png",
             "sizes": "512x512"
         }
